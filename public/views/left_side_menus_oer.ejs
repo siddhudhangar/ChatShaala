@@ -1,0 +1,27 @@
+    <div id="mySidebar" class="sidebar">
+
+      <a href="/">Home</a>
+      <a id="login_link" href="/login">Login</a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">✖</a>
+      <a onClick='function_partners()'>Partners</a>
+      <a onClick='function_courses()'>Courses</a>
+      <a onClick='function_category_common()'>Categories</a>
+      <a href="#" onclick="open_page()">About</a>
+      <%if (false) {%> 
+      <a href='<%=about%>'>About</a>
+      <a href='<%=home%>'>Chat</a>
+      <a href='<%=blog%>'>Blogs</a>
+      <a href='<%=project%>'>Projects</a>
+
+      <a href='<%=feedback%>'>Feedback</a>
+      <%}%>
+      <a href='<%=profile%>'>Profile</a>
+      <a id="logout_link" style="display: none;" onclick="logout(this)">Logout</a>
+      <%if( features.indexOf("analytics") != -1){%>
+      <br/>
+      <a> Site Statistics </a>
+      <a>Total Resources: <span id="total_resources"></span></a>
+      <a>Registered Users: <span id="registered_users"></span></a>
+      <a>Active Users: <span id="active_users"></span></a>
+      <% } %>
+    </div>

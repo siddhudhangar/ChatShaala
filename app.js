@@ -137,7 +137,7 @@ app.get('/', function (req, res) {
   var json_data = {}
   if (rawdata !=undefined && rawdata != null)
   {
-    console.log(rawdata);
+    // console.log(rawdata);
     json_data = JSON.parse(rawdata);
   }
   // fs.readFileSync('settings.json', (err, data) => {
@@ -150,6 +150,10 @@ app.get('/', function (req, res) {
   // });
   theme_color = json_data["theme_color"]
   features = json_data["features"]
+  site_settings = json_data["site_settings"]
+  site_name = json_data["site_name"]
+  active_tab_color_of_dropdown_menus = json_data["active_tab_color_of_dropdown_menus"]
+  hover_tab_color_of_dropdown_menus = json_data["hover_tab_color_of_dropdown_menus"]
   let curr_user = req.session.user;
   if (curr_user == null || curr_user==undefined) {
     curr_user = {username:'system'};
@@ -157,7 +161,7 @@ app.get('/', function (req, res) {
   // if (req.session.user) {
     let page_url = "/";
     res.render('home.ejs', {
-      home: home, about: about, blog: blog, project: project, feedback: feedback, logout: logout, profile: profile, curr_user: curr_user,url:secrets.url,page_url:page_url,theme_color: theme_color, features: features
+      home: home, about: about, blog: blog, project: project, feedback: feedback, logout: logout, profile: profile, curr_user: curr_user,url:secrets.url,page_url:page_url,theme_color: theme_color, features: features, site_settings: site_settings, site_name: site_name, active_tab_color_of_dropdown_menus: active_tab_color_of_dropdown_menus
     });
   // } else {
   //   res.redirect('/login');
@@ -1209,4 +1213,36 @@ app.post('/set_flag/:post_id/:post_action_type_id', function (req, res) {
   } else {
     res.redirect('/login');
   }
+});
+
+app.get('/analytics', function(req,res){
+  let curr_user = (req && req.session && req.session.user)? req.session.user: {username:'system'};
+  var id = req.params.id;
+  var body = '';
+  var url = secrets.url+"/about.json";
+
+  var options = {
+    method: 'GET',
+    headers: {
+      'Api-Key': secrets.key,
+      'Api-Username': 'system'
+    }
+  };
+  https.get(url, options, function (response) {
+    response.on('data', function (data) {
+      body += data;
+    });
+    response.on('end', function () {
+      // console.log(body);
+        try {
+          body = JSON.parse(body);
+        } catch (ex) {
+        // console.log(body);
+        }
+        res.send(body);
+    //   res.render('home.ejs', {
+    //     home: home, about: about, blog: blog, project: project, feedback: feedback, logout: logout, profile: profile, curr_user: curr_user,url:secrets.url,about_page:body
+    // });
+    });
+  });
 });

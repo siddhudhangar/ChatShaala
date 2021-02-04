@@ -1,6 +1,8 @@
 
 :root {
   --mainColor: #376A97;
+  --activeTabsColor: #376797;
+  --tabsHoverColor: #376797;
 }
 
 /* The sidebar menu */
@@ -54,7 +56,7 @@ body {
   margin-top: 10px;
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 18px;
   color: #818181;
   display: block;
   transition: 0.3s;
@@ -1855,7 +1857,7 @@ textarea[name="desc"] {
 }
 
 .active-tab {
-  background-color: #376797;
+  background-color: var(--activeTabsColor);
 }
 .menu-btn {
   background-color: var(--mainColor);
@@ -1900,7 +1902,7 @@ textarea[name="desc"] {
 }
 
 .links:hover {
-  background-color: #294F71;
+  background-color: var(--tabsHoverColor);
 }
 
 .dropdown-menu:hover .menu-btn {
@@ -2726,4 +2728,19 @@ a{
 .fa-download{
   color: #333232e3;
   cursor: pointer;
+}
+
+.mobile_backbtn2{
+  display:none;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #d6d4c7;
+  background-color:transparent;
+  color: #393e46;
+/*  padding: 1px 4px;*/
+  border: none;
+  color:white;
+  position: fixed;
+  margin-left: 47px;
+  margin-top: 10px;
 }

@@ -11,6 +11,21 @@ dropdownBtn.addEventListener('click', () => {
 window.onpaint = preloadFunc();
 
 function preloadFunc(){
+  console.log( document.getElementById("features").value.split(",").indexOf("analytics") );
+  if(document.getElementById("features").value.split(",").indexOf("analytics")!=-1){  
+    $.ajax({
+      url: "/analytics"
+    })
+    .done(function (data) {
+      // console.log(data)
+      let total_resources = document.getElementById("total_resources");
+      if(total_resources !=undefined && total_resources != null){
+      document.getElementById("total_resources").innerHTML = data.about.stats.topic_count
+      document.getElementById("registered_users").innerHTML = data.about.stats.user_count
+      document.getElementById("active_users").innerHTML = data.about.stats.active_users_30_days
+      }
+    });
+  }
   let username = document.getElementById("curr_user").getAttribute("name");
   let curr_user_id = document.getElementById("curr_user_id").getAttribute("name");
   document.getElementById("plus_btn").style.display = "none";
@@ -26,7 +41,10 @@ function preloadFunc(){
   }
   else{
     document.getElementById("plus_btn").style.display = "none";
-    document.getElementById("private_click").style.display = "none";
+    let private_click = document.getElementById("private_click");
+    if(private_click !=undefined && private_click != null){
+      private_click.style.display = "none";
+    }
     document.getElementById("logout_link").style.display = "none";
     document.getElementById("login_link").style.display = "block";
     document.getElementById("saveDelta").style.display = "none";
@@ -555,9 +573,13 @@ function myFunc() {
       var e = document.getElementById("category_click");
       e.classList.remove("active-tab");
       e = document.getElementById("private_click");
-      e.classList.remove("active-tab");
+      if(e !=null && e !=undefined){
+        e.classList.remove("active-tab");
+      }
       e = document.getElementById("group_click");
-      e.classList.remove("active-tab");
+      if(e !=null && e !=undefined){
+        e.classList.remove("active-tab");
+      }
       e = document.getElementById("latest_click");
       e.classList.add("active-tab");
 
@@ -952,7 +974,7 @@ function myFunc() {
           // console.log( localStorage.getItem("settings"));
           for (var i = 0; i < data.length; i++) {
             // console.log(document.getElementById("features").getAttribute("name").indexOf("download_btn"));
-            if (document.getElementById("features").getAttribute("name").indexOf("download_btn")!=-1){
+            if (document.getElementById("features").value.split(",").indexOf("download_btn")!=-1){
               download_btn = '<div class="download_div"><span id="download_' + data[i].id + '" style="display:inline-block;"></span><a target="_blank" id="download_' + data[i].id + '" href="'+ ((data[i].link_counts && data[i].link_counts.length > 0 && data[i].link_counts[0].url)?data[i].link_counts[0].url:"#") +'" download><i title="Download the resource" class="fa fa-download" aria-hidden="true"></i></a></div>'
             }
             var post_id = data[i].id;
@@ -1871,7 +1893,8 @@ function open_page(){
 
 function getbadgeIcons(data){
   // console.log(data);
-  if(data != undefined){
+  let badges = document.getElementById("features").value.indexOf("badges")
+  if(data != undefined && badges!=-1){
     var objectLengh = Object.keys(data).length;
     // console.log(objectLengh);
     var badgeIcons='';
